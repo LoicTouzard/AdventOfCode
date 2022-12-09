@@ -36,20 +36,18 @@ function Point(x=0,y=0){
 	this.str = ()=>`(${this.x},${this.y})`
 }
 
-Direction = (dir,dist) => new Point().add(DIRS[dir]).times(dist)
-
-// cord = Array(2).fill().map(_=>new Point()) // part 1
-cord = Array(10).fill().map(_=>new Point()) // part 2
-
+// cord = Array(2).fill().map(_=>new Point()) // initialize part 1 cord
+cord = Array(10).fill().map(_=>new Point()) // initialize part 2 cord
 passed = new Set([cord.at(-1).str()]) //set to store tail position
 
 //let's go !
 require('fs').readFileSync('./input.txt').toString().split('\r').join('').split('\n').forEach(line=>{ //read input
-	cord[0].add(Direction(...line.split(' '))) //move head directly to new position
+	[command,value]=line.split(' ') //get line command
+	cord[0].add(new Point().add(DIRS[command]).times(value)) //move head directly to new position
 	while(!cord[1].is_close(cord[0])){ //while 2nd knot didn't catch up head
 		for (var i = 1; i < cord.length; i++) { //for each knot (except head)
 			if(!cord[i].is_close(cord[i-1])){ // if knot isn't close to its predecessor
-				cord[i].approachFrom(cord[i-1]) // make it approach
+				cord[i].approachFrom(cord[i-1]) // make it closer
 			}
 		}
 		passed.add(cord.at(-1).str()) // store tail position in set
