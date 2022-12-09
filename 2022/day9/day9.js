@@ -42,13 +42,14 @@ passed = new Set([cord.at(-1).str()]) 			//set to store tail position
 require('fs').readFileSync('./input.txt').toString().split('\r').join('').split('\n').forEach(line=>{ //read input
 	[command,value]=line.split(' ') 				//get line command
 	cord[0].add(new Point().add(DIRS[command]).times(value)) //move head directly to new position
-	while(!cord[1].is_close(cord[0])){ 				//while 2nd knot didn't catch up head
+	while(!cord[1].is_close(cord[0])){ 			//while 2nd knot didn't catch up head
 		for (var i = 1; i < cord.length; i++) { 	//for each knot (except head)
-			if(!cord[i].is_close(cord[i-1])){ 		// if knot isn't close to its predecessor
-				cord[i].approachFrom(cord[i-1]) 	// make it closer
+			if(!cord[i].is_close(cord[i-1])){ 	// if knot isn't close to its predecessor
+				cord[i].approachFrom(cord[i-1]) // make it closer
 			}
+			else break //break optimization : two knots follow each other, then the rest do too
 		}
-		passed.add(cord.at(-1).str())	 			// store tail position in set
+		passed.add(cord.at(-1).str())	 		// store tail position in set
 	}	
 })
 
