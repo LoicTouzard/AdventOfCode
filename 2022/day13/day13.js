@@ -1,10 +1,7 @@
 input=require('fs').readFileSync('./input.txt').toString().split('\r').join('').split('\n\n')
 	.map(l=>l.split('\n').map(x=>JSON.parse(x))) // parsing lines as JSON arrays
 
-//positive if a > b // wrong order
-//0 if a==b
-//negative if b > a // right order
-/*
+/* CheckValue(a,b)
 *	compares a and b
 *	returns integer, representing a-b
 *		positive : wrong order
